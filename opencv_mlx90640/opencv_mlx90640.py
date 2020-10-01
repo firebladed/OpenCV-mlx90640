@@ -11,7 +11,7 @@ class mlx90640:
   def check_device(devpath):
 
     with open("/sys/class/video4linux/"+os.path.basename(self.devnum)+"/device/name", 'r') as file:
-    data = file.read()
-    if data != "mlx90640"
-      raise Exception("Not mlx90640")
+      data = file.read()
+      if data != "mlx90640"
+        raise Exception("Not mlx90640")
 
