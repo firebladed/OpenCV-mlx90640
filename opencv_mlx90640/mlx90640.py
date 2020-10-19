@@ -173,7 +173,7 @@ class mlx90640:
     print(Pixcor.dtype)
     print(Pixcor.shape)
 
-#    zeros = np.zeros((2,Pixcor.shape[1]), dtype="uint16") 
+#    zeros = np.zeros((2,Pixcor.shape[1]), dtype="uint16")
 #    Pixcor = np.concatenate((Pixcor, zeros), axis=0)
 
     print(Pixcor)
@@ -181,7 +181,7 @@ class mlx90640:
     print(Pixcor.shape)
 
 
-    # apply bitmasks to copies (offset 0xFC00, alpha 0x03F0, kta 0x000E, outlier 0x0001 
+    # apply bitmasks to copies (offset 0xFC00, alpha 0x03F0, kta 0x000E, outlier 0x0001
     print("\n Pixoff")
     self.Pixoff = np.bitwise_and(np.copy(Pixcor),0xFC00) >> 10
     print(self.Pixoff)
@@ -263,7 +263,7 @@ class mlx90640:
    print(frame.dtype)
    print("rows: "+str(frame.shape[0])+" cols: "+str(frame.shape[1]))
    # extract embbeded Data From Image RAM(0x700 - 0x73F) mapped to two rows of 32 pixels
-   data = frame[24:26,0:32] 
+   data = frame[24:26,0:32]
    print("data rows: "+str(data.shape[0])+" cols: "+str(data.shape[1])+" length:"+str(data.size) )
    print(binascii.hexlify(data[0:1,0:32]))
    print(binascii.hexlify(data[1:2,0:32]))
@@ -275,7 +275,7 @@ class mlx90640:
 
 
 
-   Ta_Vbe =  data[0,0] # 0x0700 2 byte pixel(25,1) 
+   Ta_Vbe =  data[0,0] # 0x0700 2 byte pixel(25,1)
    if Ta_Vbe > 32767:
        Ta_Vbe = Ta_Vbe - 65536
 
@@ -287,7 +287,7 @@ class mlx90640:
 
    Ta_PTAT = data[1,0] # 0x0720 2 byte pixel(26,1)
    if Ta_PTAT > 32767:
-        Ta_PTAT = Ta_PTAT - 65536 
+        Ta_PTAT = Ta_PTAT - 65536
 
    CPSP1 =   data[1,8] # 0x0728 2 byte pixel(26,8)
    VDDpix =  data[1,10] # 0x072A 2 byte pixel(26,10)
@@ -324,8 +324,8 @@ class mlx90640:
 
 
 #   frame = cv2.filter2D(frame, -1 , kernel)
-   # pixel 
-   # pixoffref(x,y) = offsetavg + OCCrow(y) * 2**Occscalerow +OCCcol(x)* 2**Occscalecol {+ offset(x,y)*2**OCCscaleremnent}   
+   # pixel
+   # pixoffref(x,y) = offsetavg + OCCrow(y) * 2**Occscalerow +OCCcol(x)* 2**Occscalecol {+ offset(x,y)*2**OCCscaleremnent}
    # dst = alpha * src1 + beta * src + gamma
    # dst = cv.addWeighted(src1, alpha, src2, beta, gamma)
 
@@ -344,4 +344,3 @@ class mlx90640:
    frame = np.hstack((frame, self.Pixout*2**16))
 
    return frame
-
